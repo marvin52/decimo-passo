@@ -1,0 +1,33 @@
+{
+"users": [
+    {
+      "username": "marvin",
+      "email": "m42rvin@gmail.com",
+      "password": "6dddf023b562aeee8f4f7106e22d9741",
+      "role": "admin",
+      "name": "Marvin Medeiros",
+      "description": "Sou o criador do site"
+    },
+    {
+      "username": "fulano",
+      "email": "fulano@gmail.com",
+      "password": "558d36a438e466ff4f5edf033e3e30d3",
+      "role": "user",
+      "name": "Fulano da Silva",
+      "description": "Sou um Dependente químico"
+    },
+    {
+      "username": "terapeuta",
+      "email": "terapeuta@gmail.com",
+      "password": "1fa5c9a608688a85a34a91a274992dc2",
+      "role": "helper",
+      "name": "Terapeuta da Silva",
+      "description": "Sou um terapeuta holístico"
+    }
+  ]
+}
+
+
+
+
+
