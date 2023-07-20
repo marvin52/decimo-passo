@@ -3,3 +3,21 @@
   width: 50vw !important;
   float: right;
 }
+.label-username {
+  position:absolute;
+  top: 1px
+}
+.username-group {
+  padding-top: 33px;
+  padding-bottom: 16px;
+}
+.select-role {
+  margin-top: 6px
+}
+.btn-signup {
+  margin-top: 10px
+}
+.accordion-button {
+  background-color: #333;
+  color: white;
+}
