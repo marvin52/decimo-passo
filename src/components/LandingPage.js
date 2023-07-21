@@ -1,6 +1,93 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Navbar, Container, Nav, Form, Button } from 'react-bootstrap';
+import { Navbar, Container, Nav, Modal, Button } from 'react-bootstrap';
+
+const ModalLoginMessage = () => {
+  const [show, setShow] = useState(false);
+
+  window.handleCloseLogin = () => setShow(false);
+  window.handleShowLogin = () => setShow(true);
+  
+
+  return (
+    <>
+      <Modal show={show} onHide={window.handleCloseLogin}>
+        <Modal.Header closeButton>
+          <Modal.Title>Tudo certo!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Você acabou de se logar no Décimo Passo Online!
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={window.handleCloseLogin}>
+            Fechar
+            debugger
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+};
+let message = '';
+const ModalSignUpMessage = () => {
+  
+  const [show, setShow] = useState(false);
+  window.handleCloseSignUp = () => setShow(false);
+  window.handleShowSignUp = () => setShow(true);
+
+  const [customMessage, setCustomMessage] = useState('');
+
+
+  // Função para definir a mensagem personalizada
+  window.handleCustomMessage = (a) => {
+    setCustomMessage(a);
+    window.handleShowSignUp(); // Abre o modal após definir a mensagem
+  };
+
+  
+  return (
+    <>
+      <Modal show={show} onHide={window.handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Cadastro de Novo Usuário</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p id="signUpMessage">
+            {customMessage}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={window.handleCloseSignUp}>
+            Fechar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+};
+function setCookie(name, value, daysToExpire) {
+  const date = new Date();
+  date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+function getCookie(name) {
+  const cookieName = name + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(';');
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i];
+    while (cookie.charAt(0) === ' ') {
+      cookie = cookie.substring(1);
+    }
+    if (cookie.indexOf(cookieName) === 0) {
+      return cookie.substring(cookieName.length, cookie.length);
+    }
+  }
+  return "";
+}
+
 
 const LandingPage = () => {
   const [formData, setFormData] = useState({
@@ -64,16 +151,26 @@ const LandingPage = () => {
 
     // Realizando a requisição POST usando axios
   let checkData = validateUserData(formData);
-  checkData.isValid ?
+  
+  if(checkData.isValid){
     axios
       .post(apiUrl, formData)
       .then((response) => {
+        if(response.isValid){
+          window.handleCustomMessage("Usuário Cadastrado com Sucesso!");
+        } else {
+          window.handleCustomMessage(response.data.message);
+          setCookie("authToken", response.data.loginKey, 30);
+          setCookie("username", response.data.user.username, 30);
+        }
         console.log('Requisição POST enviada com sucesso!', response);
       })
       .catch((error) => {
         console.error('Ocorreu um erro ao enviar a requisição POST.', error);
       })
-    : console.log("Erro no preenchimento do formulário", checkData);
+    } else {
+      window.handleCustomMessage(checkData.message);
+    }
   };
 
   
@@ -89,6 +186,11 @@ const LandingPage = () => {
       .then((response) => {
         //check some things yet
         console.log('Requisição POST enviada com sucesso!', response);
+        if(response.status == 200){
+          setCookie("authToken", response.data.loginKey, 30);
+          setCookie("username", response.data.user.username, 30);
+          window.handleShowLogin();
+        }
       })
       .catch((error) => {
         console.error('Ocorreu um erro ao enviar a requisição POST.', error);
@@ -237,6 +339,8 @@ const LandingPage = () => {
         
         
       </div>
+      <ModalLoginMessage></ModalLoginMessage>
+      <ModalSignUpMessage></ModalSignUpMessage>
     </div>
   );
 };
