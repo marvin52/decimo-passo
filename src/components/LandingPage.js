@@ -13,6 +13,44 @@ const LandingPage = () => {
     role: '',
   });
 
+  function validateUserData(userData) {
+    // Verifica se o password e o confirmPassword são iguais
+    if (userData.password !== userData.confirmPassword) {
+      return { isValid: false, message: 'As senhas não coincidem.' };
+    }
+  
+    // Verifica se o email está no formato correto
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(userData.email)) {
+      return { isValid: false, message: 'O email não está em formato válido.' };
+    }
+  
+    // Verifica se o role é "user" ou "helper"
+    if (userData.role !== 'user' && userData.role !== 'helper') {
+      return { isValid: false, message: 'O role deve ser "user" ou "helper".' };
+    }
+  
+    // Verifica se o username segue os padrões para nome de usuário
+    const usernamePattern = /^[a-zA-Z0-9_-]+$/;
+    if (!usernamePattern.test(userData.username)) {
+      return { isValid: false, message: 'O nome de usuário deve conter apenas letras, números, "-" ou "_", sem espaços ou caracteres especiais.' };
+    }
+  
+    // Verifica se o campo description não está em branco
+    if (!userData.description.trim()) {
+      return { isValid: false, message: 'A descrição não pode estar em branco.' };
+    }
+  
+    // Verifica se o campo name não está em branco
+    if (!userData.name.trim()) {
+      return { isValid: false, message: 'O nome não pode estar em branco.' };
+    }
+  
+    // Se todas as validações passarem, retorna como válido
+    return { isValid: true };
+  }
+
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -25,6 +63,8 @@ const LandingPage = () => {
     const apiUrl = 'https://api.decimo-passo.online/addUser';
 
     // Realizando a requisição POST usando axios
+  let checkData = validateUserData(formData);
+  checkData.isValid ?
     axios
       .post(apiUrl, formData)
       .then((response) => {
@@ -32,7 +72,8 @@ const LandingPage = () => {
       })
       .catch((error) => {
         console.error('Ocorreu um erro ao enviar a requisição POST.', error);
-      });
+      })
+    : console.log("Erro no preenchimento do formulário", checkData);
   };
 
   
@@ -46,6 +87,7 @@ const LandingPage = () => {
     axios
       .post(apiUrl, formData)
       .then((response) => {
+        //check some things yet
         console.log('Requisição POST enviada com sucesso!', response);
       })
       .catch((error) => {
@@ -60,8 +102,8 @@ const LandingPage = () => {
         <Container>
           <Navbar.Brand href="#"><i class="fa-solid fa-pen-to-square"></i>  Décimo Passo Online</Navbar.Brand>
           <Nav className="ml-auto">
-            <Nav.Link href="#">Entrar</Nav.Link>
-            <Nav.Link href="#">Inscreva-se</Nav.Link>
+            {/* <Nav.Link href="#">Entrar</Nav.Link>
+            <Nav.Link href="#">Inscreva-se</Nav.Link> */}
           </Nav>
         </Container>
       </Navbar>
@@ -70,7 +112,7 @@ const LandingPage = () => {
         <div className='col-sm'>
           <h1 className='dp_title'>Bem-vindo ao Décimo Passo Online</h1>
         </div>
-        <div className='col-sm'>
+        <div className='col-sm form-login-signup'>
           <div className="accordion accordion-flush" id="accordionFlushExample">
             <div className="accordion-item">
               <h2 className="accordion-header">
@@ -81,14 +123,15 @@ const LandingPage = () => {
               <div id="flush-collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
               <form onSubmit={handleSubmitLogin}>
               <div className="mb-3">
-                <label for="email" name="email" className="form-label">Seu Endereço de Email</label>
-                <input required value={formData.email} onChange={handleInputChange} type="email" className="form-control" id="email" name="email" placeholder="name@example.com"/>
+                <label for="email-login" name="email" className="form-label">Seu Endereço de Email</label>
+                <input required value={formData.email} onChange={handleInputChange} type="email" className="form-control" id="email-login" name="email" placeholder="name@example.com"/>
               </div>
               <div className='row'>
                 <div className='col-sm'>
                    <label for="password" name="password" className="form-label">Sua Senha:</label>
                     <div className='input-group mp-3'>
                      <input
+                        placeholder='Digite sua senha aqui'
                         required
                         className='form-control'
                         type="password"
@@ -122,6 +165,7 @@ const LandingPage = () => {
                       <label for="password" name="password" className="form-label">Sua Senha:</label>
                         <div className='input-group mp-3'>
                             <input
+                              placeholder='Digite sua senha aqui'
                               required
                               className='form-control'
                               type="password"
@@ -135,6 +179,7 @@ const LandingPage = () => {
                       <label for="password" name="confirmPassword" className="form-label">Confirme sua Senha:</label>
                         <div className='input-group mp-3'>
                             <input
+                              placeholder='Repita a sua senha aqui'
                               required
                               className='form-control'
                               type="password"
@@ -150,6 +195,7 @@ const LandingPage = () => {
                       <label for="name" name="name" className="form-label">Seu Nome Completo</label>
                       <div className="input-group">
                             <input
+                              placeholder='Diga seu nome aqui'
                               required
                               type="text"
                               name="name"
@@ -162,19 +208,19 @@ const LandingPage = () => {
                       <div className="input-group col-sm username-group">
                       <label for="username" name="username" className="form-label label-username">Seu Username</label>
                         <span className="input-group-text" id="basic-addon1">@</span>
-                        <input required name="username" value={formData.username} onChange={handleInputChange} type="text" className="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"/>
+                        <input required name="username" value={formData.username} onChange={handleInputChange} type="text" className="form-control" placeholder="Nome de usuario" aria-label="Username" aria-describedby="basic-addon1"/>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-sm">
                         <label for="description" name="description" className="form-label">Um breve resumo sobre você</label>
-                        <textarea required value={formData.description} onChange={handleInputChange} className="form-control" id="description" name="description" rows="3"></textarea>
+                        <textarea placeholder='Descreva um pouco sobre você e sobre a sua busca aqui na comunidade!' required value={formData.description} onChange={handleInputChange} className="form-control" id="description" name="description" rows="3"></textarea>
                       </div>
                       <div className='col-sm'>
                         <label>Seu papel na comunidade:</label><br/>
                         <div className="form-group mp-3">
                           <select required className="form-control select-role" name="role" value={formData.role} onChange={handleInputChange}>
-                            <option value="">Selecione</option>
+                            <option value="" disabled selected>Selecione</option>
                             <option value="user">Usuário</option>
                             <option value="helper">Terapêuta</option>
                           </select>

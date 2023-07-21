@@ -1,5 +1,5 @@
 body {
-  background-image: url("bg_lp.jpeg");
+  background-image: url("bg_lp-min.jpeg");
 }
 .form-login {
   width: 50vw !important;
@@ -49,4 +49,14 @@ body {
   background-color: rgba(20, 20, 20, 0.6);
   padding: 5px;
   border-radius: 15px;
+}
+.form-login-signup input,
+.form-login-signup textarea,
+.form-login-signup select,
+.form-login-signup span {
+  border: 2px solid #333
+}
+.form-login-signup span {
+  border-right: none;
+  border-radius: 5px 0px 0px 5px !important;
 }
