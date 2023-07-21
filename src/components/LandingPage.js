@@ -58,24 +58,24 @@ const LandingPage = () => {
     <div>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#">Décimo Passo Online</Navbar.Brand>
+          <Navbar.Brand href="#"><i class="fa-solid fa-pen-to-square"></i>  Décimo Passo Online</Navbar.Brand>
           <Nav className="ml-auto">
-            <Nav.Link href="#">Login</Nav.Link>
-            <Nav.Link href="#">Signup</Nav.Link>
+            <Nav.Link href="#">Entrar</Nav.Link>
+            <Nav.Link href="#">Inscreva-se</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
 
-      <div className='row container-fluid'>
+      <div className='row container-fluid container-forms'>
         <div className='col-sm'>
-          <h1>Bem-vindo ao Décimo Passo Online</h1>
+          <h1 className='dp_title'>Bem-vindo ao Décimo Passo Online</h1>
         </div>
         <div className='col-sm'>
           <div className="accordion accordion-flush" id="accordionFlushExample">
             <div className="accordion-item">
               <h2 className="accordion-header">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                  Entre!
+                <i class="fa-solid fa-right-to-bracket login-icon"></i> Entre!
                 </button>
               </h2>
               <div id="flush-collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
@@ -99,14 +99,14 @@ const LandingPage = () => {
                     </div>
                   </div>
                   </div>
-                  <button type="submit" className="btn btn-success btn-signup">Entrar!</button>
+                  <button type="submit" className="btn btn-success btn-signup"> <i class="fa-solid fa-right-to-bracket login-icon"></i> Entrar!</button>
                 </form>
               </div>
             </div>
             <div className="accordion-item">
               <h2 className="accordion-header">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                  Cadastre-se!
+                <i class="fa-solid fa-user-plus login-icon"></i> Ou cadastre-se!
                 </button>
               </h2>
               <div id="flush-collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -181,7 +181,7 @@ const LandingPage = () => {
                         </div>
                       </div>
                     </div>
-                    <button type="submit" className="btn btn-success btn-signup">Cadastrar!</button>
+                    <button type="submit" className="btn btn-success btn-signup"><i class="fa-solid fa-user-plus"></i> Cadastrar!</button>
                   </form>
               </div>
               </div>
