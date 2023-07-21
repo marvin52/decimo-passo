@@ -197,13 +197,14 @@ const LandingPage = () => {
         if(response.status == 200){
           setCookie("authToken", response.data.loginKey, 30);
           setCookie("username", response.data.user.username, 30);
-          window.setCustomMessageL('Você acabou de se logar no Décimo Passo Online!');
+          window.handleCustomMessageL('Você acabou de se logar no Décimo Passo Online!');
         } else {
-          window.setCustomMessageL('Algo deu errado! Verifique se o email e a senha estão corretos.');
+          window.handleCustomMessageL('Algo deu errado! Verifique se o email e a senha estão corretos.');
         }
       })
       .catch((error) => {
-        console.error('Ocorreu um erro ao enviar a requisição POST.', error);
+        window.handleCustomMessageL(error.response.data.error);
+        // console.error('Ocorreu um erro ao enviar a requisição POST.', error);
       });
   };
 
