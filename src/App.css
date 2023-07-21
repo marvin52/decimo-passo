@@ -46,3 +46,6 @@ body {
   padding: 5px;
   border-radius: 15px;
 }
+.collapse.show {
+  display: flex !important;
+}
