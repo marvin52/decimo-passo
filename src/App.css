@@ -34,6 +34,10 @@ body {
 .accordion-collapse {
   padding: 15px;
 }
+
+.accordion-collapse.show {
+  display: flex !important;
+}
 .container-forms {
   margin-top: 25px;
 }
@@ -45,7 +49,4 @@ body {
   background-color: rgba(20, 20, 20, 0.6);
   padding: 5px;
   border-radius: 15px;
-}
-.collapse.show {
-  display: flex !important;
 }
