@@ -7,28 +7,36 @@ const ModalLoginMessage = () => {
 
   window.handleCloseLogin = () => setShow(false);
   window.handleShowLogin = () => setShow(true);
+
+  const [customMessageL, setCustomMessageL] = useState('');
+
+
+  // Função para definir a mensagem personalizada
+  window.handleCustomMessageL = (a) => {
+    setCustomMessageL(a);
+    window.handleShowLogin(); // Abre o modal após definir a mensagem
+  };
   
 
   return (
     <>
       <Modal show={show} onHide={window.handleCloseLogin}>
         <Modal.Header closeButton>
-          <Modal.Title>Tudo certo!</Modal.Title>
+          <Modal.Title>Autenticação de Usuário</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Você acabou de se logar no Décimo Passo Online!
+          {customMessageL}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={window.handleCloseLogin}>
             Fechar
-            debugger
           </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
 };
-let message = '';
+
 const ModalSignUpMessage = () => {
   
   const [show, setShow] = useState(false);
@@ -189,7 +197,9 @@ const LandingPage = () => {
         if(response.status == 200){
           setCookie("authToken", response.data.loginKey, 30);
           setCookie("username", response.data.user.username, 30);
-          window.handleShowLogin();
+          window.setCustomMessageL('Você acabou de se logar no Décimo Passo Online!');
+        } else {
+          window.setCustomMessageL('Algo deu errado! Verifique se o email e a senha estão corretos.');
         }
       })
       .catch((error) => {
